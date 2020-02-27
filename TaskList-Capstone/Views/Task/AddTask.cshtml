@@ -1,0 +1,17 @@
+﻿
+@{
+    ViewData["Title"] = "AddTask";
+}
+
+<h1>Add Task</h1>
+
+<form action="../Task/AddTask" method="post">
+    <input type="text" name="TaskName" placeholder="Task Name" />
+    <input type="date" name="DueDate" placeholder="Due Date" />
+    @*Make Category into a dropdown selection (later)*@
+    <input type="text" name="Category" placeholder="Category" />
+    <input type="text" name="Description" placeholder="Task Description" />
+    <input type="hidden" name="Complete" value="false" />
+
+    <input type="submit" value="Add Task" class="btn btn-success" />
+</form>
