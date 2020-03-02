@@ -6,11 +6,15 @@
 <h1>Add Task</h1>
 
 <form action="../Task/AddTask" method="post">
-    <input type="text" name="TaskName" placeholder="Task Name" />
-    <input type="date" name="DueDate" placeholder="Due Date" />
+
+    Task Name: <input type="text" name="TaskName" placeholder="Task Name" /> <br />
+
+    Due Date: <input type="date" name="DueDate" placeholder="Due Date" /><br />
+    
     @*Make Category into a dropdown selection (later)*@
-    <input type="text" name="Category" placeholder="Category" />
-    <input type="text" name="Description" placeholder="Task Description" />
+    Category: <input type="text" name="Category" placeholder="Category" /><br />
+
+    Description:<input type="text" name="Description" placeholder="Task Description" /><br />
     <input type="hidden" name="Complete" value="false" />
 
     <input type="submit" value="Add Task" class="btn btn-success" />

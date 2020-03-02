@@ -155,3 +155,4 @@ C:\Users\kyleg\source\repos\TaskList-Capstone\TaskList-Capstone\obj\Debug\netcor
 C:\Users\kyleg\source\repos\TaskList-Capstone\TaskList-Capstone\obj\Debug\netcoreapp3.1\Razor\Views\Task\Index.cshtml.g.cs
 C:\Users\kyleg\source\repos\TaskList-Capstone\TaskList-Capstone\obj\Debug\netcoreapp3.1\Razor\Views\Task\AddTask.cshtml.g.cs
 C:\Users\kyleg\source\repos\TaskList-Capstone\TaskList-Capstone\obj\Debug\netcoreapp3.1\Razor\Views\Task\EditTask.cshtml.g.cs
+C:\Users\kyleg\source\repos\TaskList-Capstone\TaskList-Capstone\obj\Debug\netcoreapp3.1\Razor\Views\Task\Index2.cshtml.g.cs

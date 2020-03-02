@@ -17,17 +17,101 @@ namespace TaskList_Capstone.Controllers
             _context = context;
         }
 
-        //c(R)ud - Read tasks
-        public IActionResult Index()
+        //c(R)ud - Read tasks    
+        public IActionResult Index(string searchBy, string sortBy, string search)
         {
             string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            List<Tasks> thisUsersTasks = _context.Tasks.Where(x => x.UserId == id).ToList();            
 
-            List<Tasks> thisUsersTasks = _context.Tasks.Where(x => x.UserId == id).ToList();
+            //search cases
+            switch (searchBy)
+            {
+                case "Name":
+                    //search by name stuff
+                    List<Tasks> foundByNameTasks = thisUsersTasks.Where(x => x.TaskName.Contains(search) || search == null).ToList();
+                    return View(foundByNameTasks);
+                case "DueDate":
+                    //search by date stuff
+                    List<Tasks> foundByDateTasks = thisUsersTasks.Where(x => x.DueDate.ToShortDateString().ToString().Contains(search) || search == null).ToList();
+                    return View(foundByDateTasks);
 
+                case "Description":
+                    //search by description stuff
+                    List<Tasks> foundByDescripTasks = thisUsersTasks.FindAll(x => x.Description.Contains(search) || search == null).ToList();
+                    return View(foundByDescripTasks);
+                default:
+                    break;
+            }
+
+            //sort cases
+            switch (sortBy)
+            {
+                case "Name":
+                    List<Tasks> sortByNameTasks = thisUsersTasks.OrderBy(x => x.TaskName).ToList();
+                    return View(sortByNameTasks);
+                case "DueDate":
+                    List<Tasks> sortByDateTasks = thisUsersTasks.OrderBy(x => x.DueDate).ToList();
+                    return View(sortByDateTasks);
+                case "Category":
+                    List<Tasks> sortByCategoryTasks = thisUsersTasks.OrderBy(x => x.Category).ToList();
+                    return View(sortByCategoryTasks);
+                default:
+                    break;
+            }
             return View(thisUsersTasks);
         }
 
+
+        //public IActionResult Index2(string searchBy, string sortBy, string search)
+        //{
+        //    string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        //    List<Tasks> thisUsersTasks = _context.Tasks.Where(x => x.UserId == id).ToList();
+
+        //    //search cases
+        //    switch (searchBy)
+        //    {
+        //        case "Name":
+        //            //search by name stuff
+        //            List<Tasks> foundByNameTasks = thisUsersTasks.Where(x => x.TaskName.Contains(search) || search == null).ToList();
+        //            return View(foundByNameTasks);
+        //        case "DueDate":
+        //            //search by date stuff
+        //            List<Tasks> foundByDateTasks = thisUsersTasks.Where(x => x.DueDate.ToShortDateString().ToString().Contains(search) || search == null).ToList();
+        //            return View(foundByDateTasks);
+
+        //        case "Description":
+        //            //search by description stuff
+        //            List<Tasks> foundByDescripTasks = thisUsersTasks.FindAll(x => x.Description.Contains(search) || search == null).ToList();
+        //            return View(foundByDescripTasks);
+        //        default:
+        //            break;
+        //    }
+
+        //    //sort cases
+
+        //    switch (sortBy)
+        //    {
+        //        case "Name":
+        //            List<Tasks> sortByNameTasks = thisUsersTasks.OrderBy(x => x.TaskName).ToList();
+        //            return View(sortByNameTasks);
+        //        case "DueDate":
+        //            return View();
+
+        //        default:
+        //            break;
+        //    }
+
+
+
+        //    return View(thisUsersTasks);
+        //}
+
+
+
         //(C)rud - Create tasks
+
+
+        //c(R)ud - Read tasks   
         [HttpGet]
         public IActionResult AddTask()
         {
@@ -64,8 +148,6 @@ namespace TaskList_Capstone.Controllers
         }
 
         //cr(U)d - Update tasks
-
-
         //setup action to mark task complete
         public IActionResult MarkTaskComplete(int id)
         {
@@ -82,6 +164,7 @@ namespace TaskList_Capstone.Controllers
             return RedirectToAction("Index");
         }
 
+        //edit task
         [HttpGet]
         public IActionResult EditTask(int id)
         {
@@ -103,6 +186,7 @@ namespace TaskList_Capstone.Controllers
                 dbTask.DueDate = updatedTask.DueDate;
                 dbTask.Category = updatedTask.Category;
                 dbTask.Description = updatedTask.Description;
+                dbTask.Complete = updatedTask.Complete;
                 
                 _context.Entry(dbTask).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 _context.Update(dbTask);

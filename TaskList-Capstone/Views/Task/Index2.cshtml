@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewData["Title"] = "Index2";
+}
+
+@model List<Tasks>
+
+<h1>Index2</h1>
+
+@using (Html.BeginForm("Index2", "Task", FormMethod.Get))
+{
+    <b>Search by:</b>
+
+    @Html.RadioButton("searchBy", "Name") <text>Name</text>
+    @Html.RadioButton("searchBy", "Description") <text>Description</text>
+    @Html.RadioButton("searchBy", "DueDate") <text>Due Date</text>
+    <br/>
+    @Html.TextBox("search") <input type ="submit" value="Search" />
+}
+
+<table class="table table-hover">
+    <tr>
+
+        <th>
+            <a class="btn btn-dark" href="../Task/Index2?sortBy=Name">Name</a>
+       @*<a href="../Department/EditDepartment?Id=@department.Id">Edit @department.Name</a>*@
+        </th>
+
+        <th>
+            Due Date
+            <a name="sortBy" value="DueDate" class="btn btn-dark" href="../Task/Index2">^</a>
+        </th>
+        <th>Category</th>
+        <th>Description</th>
+        <th>Complete?</th>
+
+    </tr>
+    @foreach (Tasks task in Model)
+    {
+        <tr>
+            <td>@task.TaskName</td>
+            <td>@task.DueDate.ToShortDateString()</td>
+            <td>@task.Category</td>
+            <td>@task.Description</td>
+            <td>@task.Complete</td>
+        </tr>
+    }
+</table>

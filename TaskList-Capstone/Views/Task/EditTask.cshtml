@@ -10,11 +10,28 @@
 
 <form action="../Task/EditTask" method="post">
     <input type="hidden" name="Id" value="@Model.Id" />
-    <input type="text" name="TaskName" value="@Model.TaskName" placeholder="@Model.TaskName" />
-    <input type="date" name="DueDate" value="@Model.DueDate" placeholder="@Model.DueDate" />
-    <input type="text" name="Category" value="@Model.Category" placeholder="@Model.Category" />
-    <input type="text" name="Description" value="@Model.Description" placeholder="@Model.Description" />
+     
+        Task Name: <input id="taskName" type="text" name="TaskName" value="@Model.TaskName" placeholder="@Model.TaskName" /> <br />
+        
+        Due Date: <input  type="date" id="today" name="DueDate" value="@Model.DueDate" placeholder="@Model.DueDate" /><br />
 
+        Category: <input id="category" type="text" name="Category" value="@Model.Category" placeholder="@Model.Category" /><br />
+ 
+        Description: <input id="description" type="text" name="Description" value="@Model.Description" placeholder="@Model.Description" /><br />
+
+        <select class="custom-select mr-sm-2" name="Complete">
+            <option value="false">Not Complete</option>
+            <option value="true">Complete</option>
+        </select>
+   
     <input class="btn btn-success" type="submit" value="Update Task" />
 </form>
+
+
+<script>
+    let today = new Date().toISOString().substr(0, 10);
+    document.querySelector("#today").value = today;
+</script>
+
+
 

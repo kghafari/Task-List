@@ -5,28 +5,61 @@
 
 @model List<Tasks>
 
-<h1>Index</h1>
+<h1>Your Tasks</h1>
 
-<table class="table">
+@using (Html.BeginForm("Index", "Task", FormMethod.Get))
+{
+    <b>Search by:</b>
+
+    @Html.RadioButton("searchBy", "Name") <text>Name</text> <span/>
+    @Html.RadioButton("searchBy", "Description") <text>Description</text><span />
+    @Html.RadioButton("searchBy", "DueDate") <text>Due Date</text><span />
+    <br />
+    @Html.TextBox("search")
+    <input type="submit" value="Search" />
+}
+
+<p></p>
+<table class="table table-hover">
     <tr>
-        <th>Name</th>
-        <th>Due Date</th>
-        <th>Category</th>
-        <th>Description</th>
-        <th>Complete?</th>
+        <th>
+            <a class="btn btn-dark" href="../Task/Index?sortBy=Name">Name</a>
+        </th>
+        <th>
+            <a class="btn btn-dark" href="../Task/Index?sortBy=DueDate">DueDate</a>
+        </th>
+        <th>
+            <a class="btn btn-dark" href="../Task/Index?sortBy=Category">Category</a>
+        </th>
+        <th class="text-md-center">Description</th>
+        <th>Status</th>
+        <th>Actions</th>
 
     </tr>
     @foreach (Tasks task in Model)
     {
         <tr>
             <td>@task.TaskName</td>
-            <td>@task.DueDate</td>
+            <td>@task.DueDate.ToShortDateString()</td>
             <td>@task.Category</td>
             <td>@task.Description</td>
-            <td>@task.Complete</td>
-            <td><a class="btn btn-info" href="../Task/MarkTaskComplete?Id=@task.Id"> Complete</a></td>
-            <td><a class="btn btn-dark" href="../Task/EditTask?Id=@task.Id">Edit</a></td>
-            <td><a class="btn btn-dark" href="../Task/DeleteTask?Id=@task.Id">Delete</a></td>
+            <td>
+                @if(task.Complete)
+                {
+                    <span style="color:green">Complete</span>
+                }
+                else
+                {
+                    <span style="color:darkred">Incomplete</span>
+                }
+            </td>
+            <td>
+                <span class="btn-group" role="group">
+                    <a type="button" class="btn btn-success" href="../Task/MarkTaskComplete?Id=@task.Id">Finish</a>
+                    <a type="button" class="btn btn-info" href="../Task/EditTask?Id=@task.Id">Edit</a>
+                    <a type="button" class="btn btn-danger" href="../Task/DeleteTask?Id=@task.Id">Delete</a>
+                </span>
+            </td>
         </tr>
     }
 </table>
